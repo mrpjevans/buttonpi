@@ -1,0 +1,13 @@
+
+[Unit]
+Description=ButtonPi
+After=multi-user.target
+
+[Service]
+User=tnmoc
+Type=idle
+ExecStart=/home/tnmoc/buttonpi/start.sh 2>&1
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
