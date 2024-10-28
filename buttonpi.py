@@ -19,6 +19,7 @@ def announce():
     led.on()
 
 def play(file):
+    pygame.mixer.music.unload()
     pygame.mixer.music.load(file)
     pygame.mixer.music.play()
 
@@ -76,6 +77,6 @@ while True:
             led.on()
         else:
             led.off()
-            play("./audio/" + audio_mapping[config.AUDIO_TRACK - 1])
+            play("./audio/" + audio_mapping[track - 1])
             
             
