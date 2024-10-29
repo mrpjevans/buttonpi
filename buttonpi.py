@@ -39,7 +39,8 @@ def enter_setup_mode():
         setup()
 
 def setup():
-    global in_setup, button, track
+    global in_setup, button, track, led
+    led.off()
     play_and_block("./assets/enter_setup.wav")
     play_and_block("./assets/" + str(track) + ".wav")
     timer = 0
@@ -71,6 +72,7 @@ def setup():
                 with open("./config.py", 'w') as file:
                     file.write("AUDIO_TRACK = " + str(track))
                 announce()
+            led.on()
             break
 
 button.hold_time = 5
@@ -94,13 +96,3 @@ while True:
         led.on()
 
     sleep(0.1)
-
-# while True:
-#     button.wait_for_press()
-#     button.wait_for_release()
-#     if not in_setup:
-#         led.off()
-#         play_and_block("./audio/" + audio_mapping[track - 1])
-#         led.on()
-
-            
