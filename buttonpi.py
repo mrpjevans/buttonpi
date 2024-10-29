@@ -86,11 +86,12 @@ while True:
             pass
         elif pygame.mixer.music.get_busy():
             pygame.mixer.music.pause()
-            led.on()
         else:
             led.off()
             play("./audio/" + audio_mapping[track - 1])
         
+    if not pygame.mixer.music.get_busy():
+        led.on()
 
     sleep(0.1)
 
