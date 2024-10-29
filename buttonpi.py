@@ -1,3 +1,4 @@
+import os
 from time import sleep
 
 from gpiozero import Button, LED
@@ -47,8 +48,11 @@ def setup():
         if button.is_pressed:
             track += 1
             if track == 9:
-                track = 1
-            play_and_block("./assets/" + str(track) + ".wav")
+                track = 0
+            if track == 0:
+                play_and_block("./assets/shutdown.wav")
+            else:
+                play_and_block("./assets/" + str(track) + ".wav")
             button.wait_for_release()
             timer = 0
 
@@ -56,11 +60,17 @@ def setup():
         timer += 0.1
         
         if timer >= 5:
-            play_and_block("./assets/leave_setup.wav")
-            in_setup = False
-            with open("./config.py", 'w') as file:
-                file.write("AUDIO_TRACK = " + str(track))
-            announce()
+            if track == 0:
+                play_and_block("./assets/shutting_down.wav")
+                os.system("sudo poweroff")
+                while True:
+                    sleep(1)
+            else:
+                play_and_block("./assets/leave_setup.wav")
+                in_setup = False
+                with open("./config.py", 'w') as file:
+                    file.write("AUDIO_TRACK = " + str(track))
+                announce()
             break
 
 button.hold_time = 5
