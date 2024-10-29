@@ -9,6 +9,7 @@ button = Button(4, pull_up = False)
 led = LED(22)
 track = config.AUDIO_TRACK
 
+pygame.mixer.pre_init(buffer=4096)
 pygame.mixer.init()
 
 def announce():
