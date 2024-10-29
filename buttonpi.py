@@ -80,11 +80,25 @@ in_setup = False
 announce()
 
 while True:
-    button.wait_for_press()
-    button.wait_for_release()
-    if not in_setup:
-        led.off()
-        play_and_block("./audio/" + audio_mapping[track - 1])
-        led.on()
+    if button.is_pressed:
+        if in_setup:
+            pass
+        elif pygame.mixer.music.get_busy():
+            pygame.mixer.music.pause()
+            led.on()
+        else:
+            led.off()
+            play("./audio/" + audio_mapping[track - 1])
+        button.wait_for_release()
+
+    sleep(0.1)
+
+# while True:
+#     button.wait_for_press()
+#     button.wait_for_release()
+#     if not in_setup:
+#         led.off()
+#         play_and_block("./audio/" + audio_mapping[track - 1])
+#         led.on()
 
             
