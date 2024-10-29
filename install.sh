@@ -12,21 +12,27 @@ sudo apt -y update && sudo apt -y upgrade
 echo "Pi OS up to date"
 
 # Hostname
-current_hostname=$(hostname)
-new_hostname="${current_hostname%?}$1"
+echo "Changing hostname to buttonpi$1"
+new_hostname="buttonpi$1"
 sudo hostnamectl set-hostname "$new_hostname"
-echo "Hostname changed to: $new_hostname"
 
+echo "Fetching repository"
 sudo apt install python3-pip git
 cd ~
-git checkout https://github.com/mrpjevans/buttonpi.git
+git clone https://github.com/mrpjevans/buttonpi.git
 cd ~/buttonpi
 
+echo "Installing Python requirements"
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 
+echo "Setting default track to $1"
+echo "AUDIO_TRACK = $1" > ./config.py
+
+echo "Enabling service"
 sudo cp buttonpi.service /usr/lib/systemd/system/
 sudo systemctl enable buttonpi.service
-sudo systemctl start buttonpi.service
+
+echo "Please reboot"
 
