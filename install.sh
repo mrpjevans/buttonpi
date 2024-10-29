@@ -17,7 +17,7 @@ new_hostname="buttonpi$1"
 sudo hostnamectl set-hostname "$new_hostname"
 
 echo "Fetching repository"
-sudo apt install python3-pip git
+sudo apt -y install python3-pip git
 cd ~
 git clone https://github.com/mrpjevans/buttonpi.git
 cd ~/buttonpi
