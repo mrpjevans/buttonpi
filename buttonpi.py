@@ -83,11 +83,8 @@ while True:
     button.wait_for_press()
     button.wait_for_release()
     if not in_setup:
-        if pygame.mixer.music.get_busy():
-            pygame.mixer.music.pause()
-            led.on()
-        else:
-            led.off()
-            play("./audio/" + audio_mapping[track - 1])
-            
+        led.off()
+        play_and_block("./audio/" + audio_mapping[track - 1])
+        led.on()
+
             
