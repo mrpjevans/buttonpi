@@ -84,13 +84,12 @@ announce()
 while True:
     if button.is_pressed:
         button.wait_for_release()
-        if in_setup:
-            pass
-        elif pygame.mixer.music.get_busy():
-            pygame.mixer.music.pause()
-        else:
-            led.off()
-            play("./audio/" + audio_mapping[track - 1])
+        if not in_setup:
+            if pygame.mixer.music.get_busy():
+                pygame.mixer.music.pause()
+            else:
+                led.off()
+                play("./audio/" + audio_mapping[track - 1])
         
     if not pygame.mixer.music.get_busy():
         led.on()
